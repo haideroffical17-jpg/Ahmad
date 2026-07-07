@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Hub - Premium Accounts & Digital Hub</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Space Grotesk -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        whatsapp: '#25D366',
+                        premium: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            950: '#030712',
+                        },
+                        darkBg: '#020617',
+                        cosmicTeal: '#0d2d3a',
+                        purchaseBg: '#0b1329'
+                    },
+                    boxShadow: {
+                        'neon-blue': '0 0 25px rgba(14, 165, 233, 0.45)',
+                        'neon-green': '0 0 25px rgba(37, 211, 102, 0.45)',
+                        'neon-glow': '0 0 30px rgba(14, 165, 233, 0.25)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #030712;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(14, 165, 233, 0.15) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(168, 85, 247, 0.1) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(13, 45, 58, 0.2) 0%, transparent 60%);
+            background-attachment: fixed;
+        }
+        .glass-card {
+            background: rgba(11, 19, 41, 0.65);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            border-color: rgba(14, 165, 233, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(14, 165, 233, 0.2);
+        }
+        .glass-nav {
+            background: rgba(3, 7, 18, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        /* Custom scrollbar */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="text-slate-100 font-sans min-h-screen selection:bg-premium-500 selection:text-white">
+
+    <!-- Toast Notification System -->
+    <div id="toast-container" class="fixed top-24 right-6 z-[10010] flex flex-col gap-3 max-w-sm w-full pointer-events-none"></div>
+
+    <!-- Main Header Navbar -->
+    <header class="fixed w-full left-0 top-0 z-[9999] glass-nav transition-all duration-300 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <div class="flex items-center space-x-3 cursor-pointer group relative z-50" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+                <div class="relative w-12 h-12 rounded-xl overflow-hidden border border-premium-500/30 shadow-neon-blue group-hover:scale-105 transition-transform duration-300">
+                    <img 
+                        src="https://i.ibb.co/vx3NP6NS/tiktok-video-zgh7-A.jpg" 
+                        alt="Premium Hub Logo" 
+                        class="w-full h-full object-cover"
+                        onerror="this.src='https://placehold.co/100x100/0c4a6e/ffffff?text=PH'"
+                    >
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-display font-black text-xl sm:text-2xl tracking-tighter text-white leading-none mt-1">
+                        Premium <span class="bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">Hub</span>
+                    </span>
+                    <span class="text-[8px] sm:text-[9px] text-slate-400 font-bold tracking-[0.2em] uppercase mt-1">Premium Digital Assets</span>
+                </div>
+            </div>
+
+            <!-- Professional Navigation menu items -->
+            <nav class="hidden lg:flex items-center space-x-8 text-sm font-semibold text-slate-300 relative z-50">
+                <a href="#hero" onclick="document.getElementById('hero').scrollIntoView({behavior:'smooth'}); return false;" class="hover:text-white transition-colors cursor-pointer">Home</a>
+                <a href="#products" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'}); return false;" class="hover:text-white transition-colors cursor-pointer">All Tools</a>
+                <a href="#features" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'}); return false;" class="hover:text-white transition-colors cursor-pointer">Packages</a>
+                <a href="#features" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'}); return false;" class="hover:text-white transition-colors cursor-pointer">Features</a>
+                <a href="#products" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'}); return false;" class="hover:text-white transition-colors cursor-pointer">Products</a>
+                <a href="#faqs" onclick="document.getElementById('faqs').scrollIntoView({behavior:'smooth'}); return false;" class="hover:text-white transition-colors cursor-pointer">Contact Us</a>
+            </nav>
+
+            <!-- Authentication Controls & Action Buttons -->
+            <div class="flex items-center space-x-3 relative z-50">
+                <!-- Sleek Login Button -->
+                <button type="button" onclick="openLoginModal()" class="cursor-pointer px-4 py-2 text-xs sm:text-sm font-bold text-slate-300 hover:text-white border border-white/10 hover:border-white/20 rounded-xl transition-all bg-slate-900/60 flex items-center gap-2 shadow-lg hover:shadow-indigo-500/20">
+                    <i class="fa-solid fa-user-lock text-indigo-400"></i>
+                    <span>Login</span>
+                </button>
+
+                <!-- Buy Today Accent Button -->
+                <a id="nav-whatsapp-btn" href="https://wa.me/923000000000?text=Hello!" target="_blank" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-500 text-white font-extrabold text-sm hover:bg-emerald-600 shadow-neon-green transition-all transform hover:-translate-y-0.5 cursor-pointer">
+                    <i class="fa-brands fa-whatsapp text-lg animate-pulse"></i>
+                    <span>Buy Today</span>
+                </a>
+
+                <button type="button" onclick="toggleMobileMenu()" class="lg:hidden text-slate-300 hover:text-white p-2 text-xl focus:outline-none cursor-pointer">
+                    <i class="fa-solid fa-bars" id="menu-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Navigation overlay -->
+        <div id="mobile-menu" class="hidden lg:hidden border-t border-white/5 bg-slate-950 px-4 py-6 space-y-4 animate-fade-in shadow-2xl absolute w-full left-0">
+            <a href="#hero" onclick="document.getElementById('hero').scrollIntoView({behavior:'smooth'}); toggleMobileMenu(); return false;" class="block text-slate-300 hover:text-white font-semibold cursor-pointer">Home</a>
+            <a href="#products" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'}); toggleMobileMenu(); return false;" class="block text-slate-300 hover:text-white font-semibold cursor-pointer">All Tools</a>
+            <a href="#features" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'}); toggleMobileMenu(); return false;" class="block text-slate-300 hover:text-white font-semibold cursor-pointer">Packages</a>
+            <a href="#features" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'}); toggleMobileMenu(); return false;" class="block text-slate-300 hover:text-white font-semibold cursor-pointer">Features</a>
+            <a href="#products" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'}); toggleMobileMenu(); return false;" class="block text-slate-300 hover:text-white font-semibold cursor-pointer">Products</a>
+            <a href="#faqs" onclick="document.getElementById('faqs').scrollIntoView({behavior:'smooth'}); toggleMobileMenu(); return false;" class="block text-slate-300 hover:text-white font-semibold cursor-pointer">Contact Us</a>
+            <a id="mobile-whatsapp-btn" href="https://wa.me/923000000000?text=Hello!" target="_blank" class="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-emerald-500 text-white font-bold text-sm shadow-neon-green mt-4 cursor-pointer">
+                <i class="fa-brands fa-whatsapp text-lg"></i>
+                <span>Buy Today via WhatsApp</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative pt-32 pb-24 md:pt-40 md:pb-36 overflow-hidden px-4">
+        <!-- Celestial / Cosmic Planet elements reminiscent of image_19210a.png -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] bg-premium-500/10 rounded-full blur-[130px] pointer-events-none"></div>
+        <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] md:w-[500px] h-[350px] md:h-[500px] border border-premium-500/10 rounded-full pointer-events-none opacity-40"></div>
+        <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] md:w-[750px] h-[550px] md:h-[750px] border border-dashed border-sky-500/15 rounded-full pointer-events-none animate-spin" style="animation-duration: 50s;"></div>
+
+        <div class="max-w-5xl mx-auto text-center relative z-10">
+            <!-- Welcome Sub-badge -->
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/90 border border-premium-500/30 text-premium-300 text-xs sm:text-sm font-semibold mb-8 shadow-neon-glow">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span class="tracking-wide">The #1 Trusted Hub for Digital Subscriptions</span>
+            </div>
+
+            <!-- High Impact Header styling mirroring image_19210a.png -->
+            <h1 class="font-display font-extrabold text-4xl sm:text-6xl lg:text-7xl leading-[1.1] tracking-tight text-white mb-6">
+                Elite Software Solutions <br><span class="bg-gradient-to-r from-premium-400 via-sky-300 to-indigo-400 bg-clip-text text-transparent">For Modern Professionals</span>
+            </h1>
+
+            <p class="text-slate-400 text-base sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed font-light">
+                Access a curated suite of enterprise-grade SEO, AI, and design platforms at a fraction of the cost. Experience uninterrupted workflows with genuine credentials—no complex signups required.
+            </p>
+
+            <!-- Dual CTA Action Blocks inspired by image_19210a.png -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto">
+                <a id="hero-buy-btn" href="https://wa.me/923000000000?text=I%20want%20to%20buy%20a%20premium%20subscription!" target="_blank" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-xl shadow-neon-green hover:shadow-2xl transition-all transform hover:-translate-y-0.5 text-center flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-xl"></i>
+                    <span>Get Instant Access</span>
+                </a>
+                <a href="#products" class="w-full sm:w-auto px-8 py-4 bg-slate-900/90 border border-slate-700 text-slate-300 hover:text-white font-bold rounded-xl hover:bg-slate-800 hover:border-premium-500/50 transition-all text-center flex items-center justify-center gap-2 shadow-lg">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>View Catalog</span>
+                </a>
+            </div>
+
+            <!-- Live Service Trust Indicators -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mt-20 pt-10 border-t border-white/5">
+                <div class="flex flex-col items-center p-3 rounded-2xl bg-slate-950/40 border border-white/5">
+                    <i class="fa-solid fa-shield-halved text-premium-400 text-2xl mb-2"></i>
+                    <span class="text-xs sm:text-sm font-bold text-white">100% Safe Methods</span>
+                </div>
+                <div class="flex flex-col items-center p-3 rounded-2xl bg-slate-950/40 border border-white/5">
+                    <i class="fa-solid fa-bolt text-amber-400 text-2xl mb-2"></i>
+                    <span class="text-xs sm:text-sm font-bold text-white">Instant Setup (&lt;5m)</span>
+                </div>
+                <div class="flex flex-col items-center p-3 rounded-2xl bg-slate-950/40 border border-white/5">
+                    <i class="fa-solid fa-rotate-left text-emerald-400 text-2xl mb-2"></i>
+                    <span class="text-xs sm:text-sm font-bold text-white">Full Renewal Warranty</span>
+                </div>
+                <div class="flex flex-col items-center p-3 rounded-2xl bg-slate-950/40 border border-white/5">
+                    <i class="fa-solid fa-headset text-purple-400 text-2xl mb-2"></i>
+                    <span class="text-xs sm:text-sm font-bold text-white">24/7 Human Support</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catalog Products Display Segment -->
+    <section id="products" class="py-20 px-4 max-w-7xl mx-auto scroll-mt-24">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <h2 class="font-display font-bold text-3xl sm:text-4xl text-white mb-4">
+                Available Subscriptions & Tools
+            </h2>
+            <p class="text-slate-400">
+                Browse our premium tools index below. No signup is required! Select your service, then tap "Order via WhatsApp" to initiate instant checkout.
+            </p>
+
+            <!-- Categorized Filter Tabs -->
+            <div class="flex items-center justify-center gap-2 mt-8 overflow-x-auto no-scrollbar pb-2">
+                <button onclick="filterProducts('all')" id="filter-all" class="filter-tab px-4 py-2 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap bg-premium-600 text-white transition-all">
+                    All Services
+                </button>
+                <button onclick="filterProducts('ai')" id="filter-ai" class="filter-tab px-4 py-2 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 transition-all">
+                    AI Engines
+                </button>
+                <button onclick="filterProducts('design')" id="filter-design" class="filter-tab px-4 py-2 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 transition-all">
+                    Design & Editor
+                </button>
+                <button onclick="filterProducts('entertainment')" id="filter-entertainment" class="filter-tab px-4 py-2 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 transition-all">
+                    Streaming
+                </button>
+                <button onclick="filterProducts('seo')" id="filter-seo" class="filter-tab px-4 py-2 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 transition-all">
+                    SEO & Marketing
+                </button>
+            </div>
+        </div>
+
+        <!-- Dynamic Product Catalog Container Grid -->
+        <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Rendered by Javascript with customized real SVGs and prices -->
+        </div>
+    </section>
+
+    <!-- Brand Core Features Overview Section -->
+    <section id="features" class="py-20 bg-slate-950/60 border-y border-white/5 px-4 scroll-mt-24">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Features text column -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="inline-block px-3 py-1 bg-premium-500/10 text-premium-400 text-xs font-semibold rounded-full uppercase tracking-wider">
+                        Why Choose Us
+                    </div>
+                    <h2 class="font-display font-bold text-3xl sm:text-4xl text-white">
+                        Reliable Account Deliveries with Guaranteed Lifespans
+                    </h2>
+                    <p class="text-slate-400 leading-relaxed">
+                        Say goodbye to random account bans and login errors. Our dedicated subscription activations ensure completely stable access backed up by active live replacement guarantees.
+                    </p>
+                    
+                    <div class="space-y-4 pt-2">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-emerald-500/15 flex items-center justify-center text-emerald-400 shrink-0">
+                                <i class="fa-solid fa-circle-check"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold">Genuine Account Activations</h4>
+                                <p class="text-slate-400 text-sm">We configure accounts directly on your emails or provide active private profile keys.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-premium-500/15 flex items-center justify-center text-premium-400 shrink-0">
+                                <i class="fa-solid fa-arrows-rotate"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold">Immediate Free Diagnostics</h4>
+                                <p class="text-slate-400 text-sm">Should any downtime occur, our agents provide new working credentials within 10 minutes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Features highlight grid column -->
+                <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="glass-card p-6 rounded-2xl relative overflow-hidden group">
+                        <div class="absolute -right-8 -bottom-8 w-24 h-24 bg-premium-500/10 rounded-full group-hover:scale-150 transition-transform duration-500"></div>
+                        <i class="fa-solid fa-bolt text-premium-400 text-3xl mb-4 block"></i>
+                        <h3 class="text-white font-bold text-lg mb-2">Automated Direct Handover</h3>
+                        <p class="text-slate-400 text-sm">Our streamlined order pipeline delivers ready credentials straight to your WhatsApp right after validation.</p>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl relative overflow-hidden group">
+                        <div class="absolute -right-8 -bottom-8 w-24 h-24 bg-emerald-500/10 rounded-full group-hover:scale-150 transition-transform duration-500"></div>
+                        <i class="fa-solid fa-lock text-emerald-400 text-3xl mb-4 block"></i>
+                        <h3 class="text-white font-bold text-lg mb-2">Completely Private Data</h3>
+                        <p class="text-slate-400 text-sm">No databases, trackers, or cookies required. All payments are securely and privately processed.</p>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl relative overflow-hidden group">
+                        <div class="absolute -right-8 -bottom-8 w-24 h-24 bg-purple-500/10 rounded-full group-hover:scale-150 transition-transform duration-500"></div>
+                        <i class="fa-solid fa-tags text-purple-400 text-3xl mb-4 block"></i>
+                        <h3 class="text-white font-bold text-lg mb-2">Unbeatable Pricing</h3>
+                        <p class="text-slate-400 text-sm">Save more than 80% compared to typical retail subscription fees by sharing workspace slots.</p>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl relative overflow-hidden group">
+                        <div class="absolute -right-8 -bottom-8 w-24 h-24 bg-amber-500/10 rounded-full group-hover:scale-150 transition-transform duration-500"></div>
+                        <i class="fa-solid fa-heart text-amber-400 text-3xl mb-4 block"></i>
+                        <h3 class="text-white font-bold text-lg mb-2">Dedicated Aftercare</h3>
+                        <p class="text-slate-400 text-sm">Our specialists guide you through setup, device syncing, and best usage practices.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Frequently Asked Questions Segment -->
+    <section id="faqs" class="py-20 px-4 max-w-4xl mx-auto scroll-mt-24">
+        <div class="text-center mb-12">
+            <h2 class="font-display font-bold text-3xl text-white mb-4">Frequently Answered Queries</h2>
+            <p class="text-slate-400">Read how our platform handles subscriptions, deliveries, and payment processes.</p>
+        </div>
+
+        <div class="space-y-4">
+            <!-- FAQ unit 1 -->
+            <div class="glass-card rounded-xl overflow-hidden">
+                <button onclick="toggleFaq(1)" class="w-full text-left p-6 flex justify-between items-center text-white focus:outline-none">
+                    <span class="font-semibold text-base sm:text-lg">How are these accounts activated?</span>
+                    <span id="faq-icon-1" class="text-premium-400 transition-transform"><i class="fa-solid fa-chevron-down"></i></span>
+                </button>
+                <div id="faq-ans-1" class="max-h-0 overflow-hidden transition-all duration-300">
+                    <div class="p-6 pt-0 text-sm text-slate-400 border-t border-white/5">
+                        Once details are arranged over WhatsApp, we provide direct login passwords, workspace invitiation emails, or profile activation credentials. This guarantees immediate access.
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ unit 2 -->
+            <div class="glass-card rounded-xl overflow-hidden">
+                <button onclick="toggleFaq(2)" class="w-full text-left p-6 flex justify-between items-center text-white focus:outline-none">
+                    <span class="font-semibold text-base sm:text-lg">Will my account history remain fully private?</span>
+                    <span id="faq-icon-2" class="text-premium-400 transition-transform"><i class="fa-solid fa-chevron-down"></i></span>
+                </button>
+                <div id="faq-ans-2" class="max-h-0 overflow-hidden transition-all duration-300">
+                    <div class="p-6 pt-0 text-sm text-slate-400 border-t border-white/5">
+                        Absolutely. Even on custom workspace plans, your personal profile remains password-protected or isolated from other slot-holders.
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ unit 3 -->
+            <div class="glass-card rounded-xl overflow-hidden">
+                <button onclick="toggleFaq(3)" class="w-full text-left p-6 flex justify-between items-center text-white focus:outline-none">
+                    <span class="font-semibold text-base sm:text-lg">What happens if an account experiences downtime?</span>
+                    <span id="faq-icon-3" class="text-premium-400 transition-transform"><i class="fa-solid fa-chevron-down"></i></span>
+                </button>
+                <div id="faq-ans-3" class="max-h-0 overflow-hidden transition-all duration-300">
+                    <div class="p-6 pt-0 text-sm text-slate-400 border-t border-white/5">
+                        Our full replacement warranty ensures you are 100% protected. Send a text along with a screenshot to our customer care agent, and we will issue a new functional account key.
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ unit 4 -->
+            <div class="glass-card rounded-xl overflow-hidden">
+                <button onclick="toggleFaq(4)" class="w-full text-left p-6 flex justify-between items-center text-white focus:outline-none">
+                    <span class="font-semibold text-base sm:text-lg">What options are available for money transfers?</span>
+                    <span id="faq-icon-4" class="text-premium-400 transition-transform"><i class="fa-solid fa-chevron-down"></i></span>
+                </button>
+                <div id="faq-ans-4" class="max-h-0 overflow-hidden transition-all duration-300">
+                    <div class="p-6 pt-0 text-sm text-slate-400 border-t border-white/5">
+                        We welcome localized mobile transfers including EasyPaisa, JazzCash, and USDT (TRC-20) cryptocurrency deposits.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-slate-950 border-t border-white/5 py-12 px-4 relative">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl overflow-hidden border border-premium-500/30">
+                    <img 
+                        src="https://i.ibb.co/vx3NP6NS/tiktok-video-zgh7-A.jpg" 
+                        alt="Logo" 
+                        class="w-full h-full object-cover"
+                        onerror="this.src='https://placehold.co/100x100/0c4a6e/ffffff?text=PH'"
+                    >
+                </div>
+                <div>
+                    <p class="font-display font-bold text-lg text-white">Premium <span class="text-amber-400">Hub</span></p>
+                    <p class="text-xs text-slate-500">&copy; <span id="current-year">2026</span> All rights reserved.</p>
+                </div>
+            </div>
+            
+            <div class="flex flex-wrap justify-center gap-6 text-sm text-slate-400">
+                <a href="#hero" class="hover:text-white transition-colors">Home</a>
+                <a href="#products" class="hover:text-white transition-colors">Tools</a>
+                <a href="#features" class="hover:text-white transition-colors">Packages</a>
+                <a href="#features" class="hover:text-white transition-colors">Benefits</a>
+                <button onclick="openLoginModal()" class="text-xs text-premium-400 hover:underline">
+                    <i class="fa-solid fa-user-gear mr-1"></i>Owner Login
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Bubble -->
+    <div class="fixed bottom-6 right-6 z-30 group flex flex-col items-end">
+        <span class="bg-slate-900 text-white border border-white/10 text-[11px] px-3 py-1.5 rounded-xl shadow-2xl mb-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+            💡 Tap to Chat Live
+        </span>
+        <a id="floating-whatsapp-btn" href="https://wa.me/923000000000?text=Hello!" target="_blank" class="w-14 h-14 bg-emerald-500 rounded-full flex items-center justify-center text-white text-3xl shadow-neon-green hover:bg-emerald-600 transition-transform transform hover:scale-110 cursor-pointer relative z-50">
+            <i class="fa-brands fa-whatsapp animate-bounce" style="animation-duration: 4s;"></i>
+        </a>
+    </div>
+
+    <!-- Interactive Universal Login Modal -->
+    <div id="login-modal" class="fixed inset-0 bg-slate-950/85 z-[10000] flex items-center justify-center p-4 hidden backdrop-blur-md">
+        <div class="bg-slate-900 border border-white/10 rounded-3xl w-full max-w-md p-6 sm:p-8 shadow-2xl relative">
+            <button onclick="closeLoginModal()" class="absolute right-4 top-4 text-slate-400 hover:text-white p-2 rounded-lg bg-slate-800">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 rounded-2xl bg-premium-500/10 border border-premium-500/30 flex items-center justify-center text-premium-400 text-2xl mx-auto mb-3">
+                    <i class="fa-solid fa-user-lock"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white">Sign In to Dashboard</h3>
+            </div>
+
+            <!-- Login Input Fields -->
+            <form id="login-form" onsubmit="handleAuthSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Email Address</label>
+                    <input 
+                        type="email" 
+                        id="auth-email" 
+                        required
+                        placeholder="Enter email address" 
+                        class="bg-slate-950 border border-white/10 rounded-xl px-4 py-3 text-white text-sm w-full focus:outline-none focus:border-premium-400 transition-colors"
+                    >
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Security Password</label>
+                    <input 
+                        type="password" 
+                        id="auth-password" 
+                        required
+                        placeholder="••••••••" 
+                        class="bg-slate-950 border border-white/10 rounded-xl px-4 py-3 text-white text-sm w-full focus:outline-none focus:border-premium-400 transition-colors"
+                    >
+                </div>
+                
+                <button type="submit" class="w-full py-3 bg-gradient-to-r from-premium-600 to-sky-500 text-white font-extrabold text-sm rounded-xl hover:shadow-neon-blue transition-all">
+                    Sign In Securely
+                </button>
+            </form>
+
+            <div class="mt-4 text-center">
+                <p class="text-xs text-slate-500">
+                    💡 <span class="text-slate-400">Notice:</span> Customers never need to sign up to use Premium Hub!
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- No Login Required Notification Alert Modal -->
+    <div id="no-login-modal" class="fixed inset-0 bg-slate-950/90 z-[10000] flex items-center justify-center p-4 hidden backdrop-blur-md">
+        <div class="bg-slate-900 border border-emerald-500/20 rounded-3xl w-full max-w-sm p-6 text-center shadow-2xl">
+            <div class="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-3xl mx-auto mb-4">
+                <i class="fa-solid fa-face-smile"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">No Login Required!</h3>
+            <p class="text-slate-300 text-sm mb-6 leading-relaxed">
+                To keep your purchasing process hassle-free, we do not require sign-ups. You can purchase accounts instantly without registering an account.
+            </p>
+            <div class="space-y-2">
+                <button onclick="dismissAndShop()" class="w-full py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-xl shadow-neon-green transition-all">
+                    Start Shopping Instantly
+                </button>
+                <button onclick="closeNoLoginModal()" class="w-full py-2.5 text-slate-400 hover:text-slate-200 text-xs">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Secret Owner Settings Panel (Activated upon successful Admin authentication) -->
+    <div id="admin-panel" class="fixed inset-0 bg-slate-950/95 z-[10000] flex items-center justify-center p-4 hidden backdrop-blur-md">
+        <div class="bg-slate-900 border border-premium-500/40 rounded-3xl w-full max-w-2xl max-h-[85vh] overflow-y-auto p-6 md:p-8 shadow-2xl">
+            
+            <!-- Admin Panel Header -->
+            <div class="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-premium-500/10 flex items-center justify-center text-premium-400">
+                        <i class="fa-solid fa-screwdriver-wrench text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white">Administrator Control Panel</h3>
+                        <p class="text-xs text-slate-400">Modify global targets, catalog, and track visitors</p>
+                    </div>
+                </div>
+                <button onclick="closeAdminPanel()" class="text-slate-400 hover:text-white text-lg p-2 rounded-lg bg-slate-800">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Live Stats -->
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <div class="bg-slate-950 border border-white/5 rounded-xl p-4 flex items-center justify-between">
+                    <div>
+                        <p class="text-[10px] text-slate-400 uppercase tracking-wider mb-1">Daily Visitors</p>
+                        <h4 id="stat-daily" class="text-2xl font-bold text-premium-400">0</h4>
+                    </div>
+                    <i class="fa-solid fa-users text-2xl text-slate-800"></i>
+                </div>
+                <div class="bg-slate-950 border border-white/5 rounded-xl p-4 flex items-center justify-between">
+                    <div>
+                        <p class="text-[10px] text-slate-400 uppercase tracking-wider mb-1">Monthly Visitors</p>
+                        <h4 id="stat-monthly" class="text-2xl font-bold text-emerald-400">0</h4>
+                    </div>
+                    <i class="fa-solid fa-chart-line text-2xl text-slate-800"></i>
+                </div>
+            </div>
+
+            <!-- Global Params configuration -->
+            <div class="space-y-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Target WhatsApp Number</label>
+                        <input 
+                            type="text" 
+                            id="admin-whatsapp" 
+                            placeholder="e.g. 923001234567" 
+                            class="bg-slate-950 border border-white/10 rounded-xl px-4 py-2.5 text-white w-full focus:outline-none focus:border-premium-500 text-sm"
+                        >
+                        <span class="text-[10px] text-slate-400 mt-1 block">Specify Country Code (no +, no spaces). e.g., 923000000000</span>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Currency Unit</label>
+                        <input 
+                            type="text" 
+                            id="admin-currency" 
+                            placeholder="e.g. Rs., PKR, $, INR" 
+                            class="bg-slate-950 border border-white/10 rounded-xl px-4 py-2.5 text-white w-full focus:outline-none focus:border-premium-500 text-sm"
+                        >
+                        <span class="text-[10px] text-slate-400 mt-1 block">Specify localized currency logo.</span>
+                    </div>
+                </div>
+
+                <!-- Product Catalog Dynamic Fields generator -->
+                <div class="border-t border-white/10 pt-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="text-sm font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-tags text-premium-400"></i> Manage Products
+                        </h4>
+                        <button onclick="toggleAddProductForm()" class="px-3 py-1.5 bg-premium-600 hover:bg-premium-500 text-white text-xs font-bold rounded-lg transition-colors">
+                            + Add New
+                        </button>
+                    </div>
+
+                    <!-- Add Product Form (Hidden by default) -->
+                    <div id="add-product-form" class="hidden bg-slate-950 border border-premium-500/30 p-4 rounded-xl mb-4 space-y-3">
+                        <input type="text" id="new-prod-name" placeholder="Product Name (e.g. Canva Pro)" class="bg-slate-900 border border-white/10 rounded-lg px-3 py-2 text-xs text-white w-full focus:outline-none focus:border-premium-500">
+                        <textarea id="new-prod-desc" placeholder="Brief Description" rows="2" class="bg-slate-900 border border-white/10 rounded-lg px-3 py-2 text-xs text-white w-full focus:outline-none focus:border-premium-500"></textarea>
+                        <div class="grid grid-cols-2 gap-3">
+                            <input type="text" id="new-prod-orig" placeholder="Original Price" class="bg-slate-900 border border-white/10 rounded-lg px-3 py-2 text-xs text-white w-full focus:outline-none focus:border-premium-500">
+                            <input type="text" id="new-prod-sale" placeholder="Sale Price" class="bg-slate-900 border border-white/10 rounded-lg px-3 py-2 text-xs text-white w-full focus:outline-none focus:border-premium-500">
+                        </div>
+                        <input type="text" id="new-prod-logo" placeholder="Logo Image URL (Optional)" class="bg-slate-900 border border-white/10 rounded-lg px-3 py-2 text-xs text-white w-full focus:outline-none focus:border-premium-500">
+                        <button onclick="addNewProduct()" class="w-full py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold rounded-lg transition-colors">Save Product</button>
+                    </div>
+
+                    <div id="admin-price-rows" class="space-y-4 max-h-[35vh] overflow-y-auto pr-2">
+                        <!-- Populated dynamically via Javascript -->
+                    </div>
+                </div>
+
+                <!-- Footer Operations / Save buttons -->
+                <div class="border-t border-white/10 pt-6 flex flex-col sm:flex-row gap-4 items-center justify-between">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">Update Admin Password</label>
+                        <input 
+                            type="password" 
+                            id="admin-pass-change" 
+                            placeholder="Type new password" 
+                            class="bg-slate-950 border border-white/10 rounded-lg px-3 py-1.5 text-white text-xs w-44 focus:outline-none focus:border-premium-500"
+                        >
+                    </div>
+                    <div class="flex items-center gap-3 w-full sm:w-auto">
+                        <button onclick="closeAdminPanel()" class="w-full sm:w-auto px-5 py-2.5 bg-slate-800 text-slate-300 rounded-xl hover:text-white text-sm">
+                            Discard
+                        </button>
+                        <button onclick="saveAdminSettings()" class="w-full sm:w-auto px-6 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-sm rounded-xl shadow-neon-green transition-all">
+                            Save Configuration
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CLIENT AND ENGINE SCRIPTS -->
+    <script>
+        // Default Global Setup Values
+        const APP_FALLBACK_SETTINGS = {
+            whatsapp: "923000000000", 
+            currency: "Rs.",
+            adminEmail: "Haideroffical17@gmail.com",
+            adminPass: "HaiderAli000"
+        };
+
+        // Real Official Brand Logos via direct images
+        const BRAND_LOGOS = {
+            chatgpt: `<img src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" alt="ChatGPT" class="w-10 h-10 object-contain p-1">`,
+            canva: `<img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Canva_icon_2021.svg" alt="Canva" class="w-10 h-10 object-contain p-1">`,
+            capcut: `<img src="https://freelogopng.com/images/all_img/1656733637capcut-logo-png.png" alt="CapCut" onerror="this.src='https://placehold.co/100x100/0ea5e9/ffffff?text=CC'" class="w-10 h-10 object-contain p-1 rounded-lg">`,
+            netflix: `<img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix" class="w-10 h-10 object-contain">`,
+            spotify: `<img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify" class="w-10 h-10 object-contain p-1">`,
+            midjourney: `<img src="https://upload.wikimedia.org/wikipedia/commons/e/e6/Midjourney_Emblem.png" alt="Midjourney" class="w-10 h-10 object-contain p-1 filter invert">`,
+            semrush: `<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Semrush_logo.svg/512px-Semrush_logo.svg.png" alt="Semrush" class="w-10 h-10 object-contain p-1">`,
+            adobecc: `<img src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Adobe_Creative_Cloud_Logo_2020.svg" alt="Adobe CC" class="w-10 h-10 object-contain p-1">`
+        };
+
+        // Core dynamic products catalog containing the real prices and descriptions
+        const DEFAULT_CATALOG = [
+            {
+                id: "chatgpt",
+                name: "ChatGPT Plus Enterprise",
+                category: "ai",
+                desc: "Unlock maximum productivity with GPT-4o, advanced data analysis, DALL-E 3, and dedicated custom GPT builders for your business.",
+                iconKey: "chatgpt",
+                features: ["Private Profile Handover", "Premium Usage Limits", "No Shared Screen Locks", "Full 30 Days Replacement"],
+                originalPrice: "5500",
+                salePrice: "3499",
+                badge: "Best for Business"
+            },
+            {
+                id: "canva",
+                name: "Canva Pro Workspace",
+                category: "design",
+                desc: "Elevate your brand with premium templates, unlimited asset licenses, background remover, and the Magic Studio AI suite.",
+                iconKey: "canva",
+                features: ["Private Personal Space", "80GB Free Cloud Files", "Direct Verification Link", "1 Year Stable Access"],
+                originalPrice: "2000",
+                salePrice: "499",
+                badge: "Top Seller"
+            },
+            {
+                id: "capcut",
+                name: "CapCut Pro Ultimate",
+                category: "design",
+                desc: "Streamline video production with premium effects, cloud collaboration, auto-captions, and commercial-use audio assets.",
+                iconKey: "capcut",
+                features: ["Own Email Activation", "Desktop and Mobile sync", "No watermark exports", "Full Plan Warranty"],
+                originalPrice: "3200",
+                salePrice: "1499",
+                badge: "Content Creators"
+            },
+            {
+                id: "netflix",
+                name: "Netflix 4K Ultra HD",
+                category: "entertainment",
+                desc: "Immerse yourself in cinematic 4K HDR entertainment. Includes dedicated private profiles secured by personal PIN codes.",
+                iconKey: "netflix",
+                features: ["Private Password Lock Profile", "Ultra HD quality (4K)", "Mobile & TV synchronization", "Full Monthly Coverage"],
+                originalPrice: "1800",
+                salePrice: "899",
+                badge: "Most Popular"
+            },
+            {
+                id: "spotify",
+                name: "Spotify Premium Duo",
+                category: "entertainment",
+                desc: "Enjoy pristine, high-fidelity audio playback. Download playlists for offline listening with zero ad interruptions.",
+                iconKey: "spotify",
+                features: ["Individual Profile upgrade", "High fidelity audio", "Completely ad-free music", "30-Day Auto Guarantee"],
+                originalPrice: "1200",
+                salePrice: "399",
+                badge: "Audio Hub"
+            },
+            {
+                id: "midjourney",
+                name: "Midjourney V6 Pro",
+                category: "ai",
+                desc: "Harness industry-leading AI image generation. Features stealth mode, fast GPU processing, and high-resolution upscaling.",
+                iconKey: "midjourney",
+                features: ["Private Generation Slots", "Stealth outputs enabled", "Dedicated fast GPU hours", "Full Period Warranty"],
+                originalPrice: "8500",
+                salePrice: "4499",
+                badge: "AI Graphics"
+            },
+            {
+                id: "semrush",
+                name: "Semrush Pro SEO Suite",
+                category: "seo",
+                desc: "Dominate search rankings with comprehensive keyword research, competitor analysis, and advanced site auditing tools.",
+                iconKey: "semrush",
+                features: ["Pro Level Limit Access", "Clean Shared UI Panel", "Daily Domain Report Slots", "No Password Reset Errors"],
+                originalPrice: "11500",
+                salePrice: "2999",
+                badge: "Marketers Choice"
+            },
+            {
+                id: "adobecc",
+                name: "Adobe CC All Apps",
+                category: "design",
+                desc: "The ultimate creative powerhouse. Access Photoshop, Premiere Pro, Illustrator, and 20+ applications on your own Adobe ID.",
+                iconKey: "adobecc",
+                features: ["Activates on your own email", "Direct creative cloud updates", "1000 AI generation credits", "Full Year Validity Pack"],
+                originalPrice: "18000",
+                salePrice: "5999",
+                badge: "Creative Standard"
+            }
+        ];
+
+        let appSettings = JSON.parse(localStorage.getItem('seo_store_settings')) || APP_FALLBACK_SETTINGS;
+        let appProducts = JSON.parse(localStorage.getItem('seo_store_products')) || DEFAULT_CATALOG;
+
+        function initVisitorTracking() {
+            let visitors = JSON.parse(localStorage.getItem('seo_store_visitors')) || { daily: 0, monthly: 0, lastDate: '', lastMonth: '' };
+            const today = new Date();
+            const dateString = today.toISOString().split('T')[0];
+            const monthString = dateString.substring(0, 7);
+
+            if (visitors.lastDate !== dateString) {
+                visitors.daily = 0;
+                visitors.lastDate = dateString;
+            }
+            if (visitors.lastMonth !== monthString) {
+                visitors.monthly = 0;
+                visitors.lastMonth = monthString;
+            }
+
+            // Increment slightly to simulate traffic
+            visitors.daily += Math.floor(Math.random() * 3) + 1;
+            visitors.monthly += Math.floor(Math.random() * 3) + 1;
+            
+            localStorage.setItem('seo_store_visitors', JSON.stringify(visitors));
+            return visitors;
+        }
+
+        window.onload = function() {
+            initVisitorTracking();
+            renderProducts();
+            refreshInteractiveElements();
+            setupFooterYear();
+
+            // Handle secret #manage hash parameter directly from address bar
+            if (window.location.hash === '#manage') {
+                openLoginModal();
+            }
+        };
+
+        // Render current digital products to grid UI
+        function renderProducts(filter = 'all') {
+            const grid = document.getElementById('products-grid');
+            grid.innerHTML = '';
+
+            const itemsToRender = filter === 'all' 
+                ? appProducts 
+                : appProducts.filter(p => p.category === filter);
+
+            itemsToRender.forEach(p => {
+                let logoContent = `<i class="fa-solid fa-cube text-slate-400 text-3xl"></i>`;
+                if (p.customLogoUrl) {
+                    logoContent = `<img src="${p.customLogoUrl}" alt="${p.name}" class="w-12 h-12 object-contain p-1 rounded-lg" onerror="this.src='https://placehold.co/100x100/0ea5e9/ffffff?text=Tool'">`;
+                } else if (BRAND_LOGOS[p.iconKey]) {
+                    logoContent = BRAND_LOGOS[p.iconKey];
+                }
+
+                const customWhatsappMsg = encodeURIComponent(`Hello Premium Hub! I want to buy the "${p.name}" VIP package. Please guide me through payment processes so I can activate my subscription. Price: ${appSettings.currency} ${p.salePrice}`);
+                const whatsappUrl = `https://wa.me/${appSettings.whatsapp}?text=${customWhatsappMsg}`;
+
+                const cardMarkup = `
+                    <div class="relative group rounded-3xl p-[1.5px] bg-gradient-to-b from-white/10 to-white/5 hover:from-amber-400/80 hover:to-orange-600/80 transition-all duration-500 overflow-hidden cursor-pointer h-full" onclick="window.open('${whatsappUrl}', '_blank')">
+                        <div class="absolute inset-0 bg-gradient-to-br from-amber-500/10 to-orange-600/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="relative h-full bg-[#030712] rounded-[22px] p-6 flex flex-col z-10 overflow-hidden shadow-2xl">
+                            <!-- Inner Glow -->
+                            <div class="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/15 rounded-full blur-[40px] group-hover:bg-amber-400/30 transition-colors duration-500"></div>
+                            
+                            <!-- Header branding and badge -->
+                            <div class="flex items-center justify-between mb-5 relative z-20">
+                                <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 border border-white/10 flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(245,158,11,0.3)] transition-all duration-500">
+                                    ${logoContent}
+                                </div>
+                                ${p.badge ? `<span class="bg-gradient-to-r from-amber-500/10 to-orange-500/10 text-amber-500 text-[10px] font-black uppercase px-3 py-1.5 rounded-full border border-amber-500/20 shadow-[0_0_10px_rgba(245,158,11,0.1)]">${p.badge}</span>` : ''}
+                            </div>
+
+                            <!-- Product information and key benefits -->
+                            <h3 class="text-white font-black text-2xl mb-2 font-display tracking-tight group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-amber-200 group-hover:to-amber-500 group-hover:bg-clip-text transition-all duration-300 relative z-20">${p.name}</h3>
+                            <p class="text-slate-400 text-sm mb-6 leading-relaxed min-h-[60px] font-medium relative z-20">${p.desc}</p>
+
+                            <ul class="space-y-3 mb-8 flex-1 relative z-20">
+                                ${p.features.map(f => `
+                                    <li class="flex items-start text-xs text-slate-300 font-medium">
+                                        <i class="fa-solid fa-check text-emerald-400 mr-2.5 mt-0.5 drop-shadow-[0_0_8px_rgba(52,211,153,0.4)]"></i>
+                                        <span>${f}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+
+                            <!-- CTA Buy Button and price display -->
+                            <div class="border-t border-white/10 pt-5 mt-auto relative z-20">
+                                <div class="flex items-end justify-between mb-5">
+                                    <div>
+                                        <span class="text-[10px] text-amber-500/80 uppercase tracking-wider font-bold mb-1 block">VIP Deal</span>
+                                        <span class="text-xs text-slate-500 line-through font-semibold">${appSettings.currency} ${p.originalPrice}</span>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="text-3xl font-black text-white font-display drop-shadow-lg">${appSettings.currency} ${p.salePrice}</span>
+                                    </div>
+                                </div>
+                                
+                                <button class="flex items-center justify-center gap-2 w-full py-3.5 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold rounded-xl hover:shadow-[0_0_20px_rgba(245,158,11,0.4)] transition-all transform active:scale-[0.98]">
+                                    <i class="fa-brands fa-whatsapp text-xl"></i>
+                                    <span>Secure via WhatsApp</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += cardMarkup;
+            });
+        }
+
+        // Handle category change navigation tabs
+        function filterProducts(category) {
+            const tabs = document.querySelectorAll('.filter-tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('bg-premium-600', 'text-white');
+                tab.classList.add('bg-slate-900', 'text-slate-400');
+            });
+
+            const currentActiveTab = document.getElementById(`filter-${category}`);
+            if (currentActiveTab) {
+                currentActiveTab.classList.remove('bg-slate-900', 'text-slate-400');
+                currentActiveTab.classList.add('bg-premium-600', 'text-white');
+            }
+
+            renderProducts(category);
+        }
+
+        // Auth Modals Toggle Utilities
+        function openLoginModal() {
+            document.getElementById('login-modal').classList.remove('hidden');
+            document.getElementById('auth-email').value = '';
+            document.getElementById('auth-password').value = '';
+            document.getElementById('auth-email').focus();
+        }
+
+        function closeLoginModal() {
+            document.getElementById('login-modal').classList.add('hidden');
+        }
+
+        function openNoLoginModal() {
+            document.getElementById('no-login-modal').classList.remove('hidden');
+        }
+
+        function closeNoLoginModal() {
+            document.getElementById('no-login-modal').classList.add('hidden');
+        }
+
+        function dismissAndShop() {
+            closeNoLoginModal();
+            document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Intercept login inputs
+        function handleAuthSubmit(event) {
+            event.preventDefault();
+            const email = document.getElementById('auth-email').value.trim();
+            const pass = document.getElementById('auth-password').value.trim();
+
+            closeLoginModal();
+
+            // Validate against Owner credentials
+            if (email.toLowerCase() === appSettings.adminEmail.toLowerCase() && pass === appSettings.adminPass) {
+                showToastNotification("Welcome Owner! Login Successful.", "success");
+                openAdminPanel();
+            } else {
+                // Anyone else gets blocked with our custom friendly notification message
+                openNoLoginModal();
+            }
+        }
+
+        // Global variables updating engine
+        function refreshInteractiveElements() {
+            const currentNum = appSettings.whatsapp;
+            const standardMsg = encodeURIComponent("Hello Premium Hub! I am interested in ordering premium services.");
+            const completeUrl = `https://wa.me/${currentNum}?text=${standardMsg}`;
+
+            document.getElementById('nav-whatsapp-btn').setAttribute('href', completeUrl);
+            document.getElementById('mobile-whatsapp-btn').setAttribute('href', completeUrl);
+            document.getElementById('hero-buy-btn').setAttribute('href', completeUrl);
+            document.getElementById('floating-whatsapp-btn').setAttribute('href', completeUrl);
+        }
+
+        function toggleAddProductForm() {
+            const form = document.getElementById('add-product-form');
+            form.classList.toggle('hidden');
+        }
+
+        function deleteProduct(id) {
+            if(confirm('Are you sure you want to remove this tool?')) {
+                appProducts = appProducts.filter(p => p.id !== id);
+                localStorage.setItem('seo_store_products', JSON.stringify(appProducts));
+                openAdminPanel(); // Refresh admin list
+                renderProducts(); // Refresh public list
+                showToastNotification("Product deleted successfully!", "success");
+            }
+        }
+
+        function addNewProduct() {
+            const name = document.getElementById('new-prod-name').value.trim();
+            const desc = document.getElementById('new-prod-desc').value.trim();
+            const orig = document.getElementById('new-prod-orig').value.trim();
+            const sale = document.getElementById('new-prod-sale').value.trim();
+            const logo = document.getElementById('new-prod-logo').value.trim();
+
+            if(!name || !orig || !sale) {
+                alert("Please fill in at least Name, Original Price, and Sale Price.");
+                return;
+            }
+
+            const newId = name.toLowerCase().replace(/[^a-z0-9]/g, '-') + '-' + Date.now();
+            appProducts.push({
+                id: newId,
+                name: name,
+                category: 'all', // Defaulting to all categories
+                desc: desc || 'Premium reliable access.',
+                iconKey: 'custom',
+                customLogoUrl: logo,
+                features: ["Private Handover", "Instant Setup", "Full Warranty", "24/7 Support"],
+                originalPrice: orig,
+                salePrice: sale,
+                badge: "New Arrival"
+            });
+
+            localStorage.setItem('seo_store_products', JSON.stringify(appProducts));
+            document.getElementById('new-prod-name').value = '';
+            document.getElementById('new-prod-desc').value = '';
+            document.getElementById('new-prod-orig').value = '';
+            document.getElementById('new-prod-sale').value = '';
+            document.getElementById('new-prod-logo').value = '';
+            
+            toggleAddProductForm();
+            openAdminPanel();
+            renderProducts();
+            showToastNotification("New product added!", "success");
+        }
+
+        // Open Secret Admin Control Panel
+        function openAdminPanel() {
+            document.getElementById('admin-panel').classList.remove('hidden');
+            document.getElementById('admin-whatsapp').value = appSettings.whatsapp;
+            document.getElementById('admin-currency').value = appSettings.currency;
+            document.getElementById('admin-pass-change').value = '';
+
+            // Update stats view
+            const visitors = JSON.parse(localStorage.getItem('seo_store_visitors')) || { daily: 0, monthly: 0 };
+            document.getElementById('stat-daily').innerText = visitors.daily;
+            document.getElementById('stat-monthly').innerText = visitors.monthly;
+
+            const itemsFormContainer = document.getElementById('admin-price-rows');
+            itemsFormContainer.innerHTML = '';
+
+            appProducts.forEach((p, idx) => {
+                const formRow = `
+                    <div class="bg-slate-950 p-4 rounded-xl border border-white/5 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-extrabold px-2 py-0.5 bg-premium-500/20 text-premium-400 rounded-md">#${idx+1}</span>
+                                <span class="text-sm font-semibold text-white">${p.name}</span>
+                            </div>
+                            <button onclick="deleteProduct('${p.id}')" class="text-red-400 hover:text-red-300 text-xs px-2 py-1 bg-red-500/10 rounded-md transition-colors">
+                                <i class="fa-solid fa-trash"></i> Delete
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[10px] text-slate-400 mb-1">Promo Sale Price</label>
+                                <input 
+                                    type="text" 
+                                    id="admin-sale-price-${p.id}" 
+                                    value="${p.salePrice}" 
+                                    class="bg-slate-900 border border-white/10 rounded-lg px-3 py-1.5 text-xs text-white w-full focus:outline-none focus:border-premium-500"
+                                >
+                            </div>
+                            <div>
+                                <label class="block text-[10px] text-slate-400 mb-1">Standard Price</label>
+                                <input 
+                                    type="text" 
+                                    id="admin-orig-price-${p.id}" 
+                                    value="${p.originalPrice}" 
+                                    class="bg-slate-900 border border-white/10 rounded-lg px-3 py-1.5 text-xs text-white w-full focus:outline-none focus:border-premium-500"
+                                >
+                            </div>
+                        </div>
+                    </div>
+                `;
+                itemsFormContainer.innerHTML += formRow;
+            });
+        }
+
+        function closeAdminPanel() {
+            document.getElementById('admin-panel').classList.add('hidden');
+            if (window.location.hash === '#manage') {
+                history.replaceState(null, null, ' ');
+            }
+        }
+
+        // Commit pricing modifications and settings configuration modifications
+        function saveAdminSettings() {
+            appSettings.whatsapp = document.getElementById('admin-whatsapp').value.trim();
+            appSettings.currency = document.getElementById('admin-currency').value.trim();
+
+            const passwordChangeValue = document.getElementById('admin-pass-change').value.trim();
+            if (passwordChangeValue.length >= 4) {
+                appSettings.adminPass = passwordChangeValue;
+                showToastNotification("Admin password changed successfully!", "success");
+            }
+
+            // Loop and save prices from fields
+            appProducts.forEach(p => {
+                const saleField = document.getElementById(`admin-sale-price-${p.id}`);
+                const origField = document.getElementById(`admin-orig-price-${p.id}`);
+
+                if (saleField) p.salePrice = saleField.value.trim();
+                if (origField) p.originalPrice = origField.value.trim();
+            });
+
+            // Write to localStorage
+            localStorage.setItem('seo_store_settings', JSON.stringify(appSettings));
+            localStorage.setItem('seo_store_products', JSON.stringify(appProducts));
+
+            // Reload visual components
+            renderProducts();
+            refreshInteractiveElements();
+            closeAdminPanel();
+
+            showToastNotification("Dashboard pricing configurations updated!", "success");
+        }
+
+        // CUSTOM NOTIFICATIONS (TINY TOAST ENGINE)
+        function showToastNotification(msg, category = 'success') {
+            const listContainer = document.getElementById('toast-container');
+            const alertElement = document.createElement('div');
+            
+            const outerDesign = category === 'success' ? 'border-emerald-500/30 bg-slate-900/95 text-white' : 'border-red-500/30 bg-slate-900/95 text-white';
+            const dynamicIcon = category === 'success' 
+                ? '<i class="fa-solid fa-circle-check text-emerald-400 text-lg mr-2"></i>' 
+                : '<i class="fa-solid fa-circle-exclamation text-red-400 text-lg mr-2"></i>';
+
+            alertElement.className = `glass-card border ${outerDesign} p-4 rounded-xl shadow-2xl flex items-center transform translate-y-4 opacity-0 transition-all duration-300 max-w-sm w-full pointer-events-auto`;
+            alertElement.innerHTML = `
+                ${dynamicIcon}
+                <div class="text-sm font-medium flex-1">${msg}</div>
+                <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-white ml-2 text-xs">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            `;
+
+            listContainer.appendChild(alertElement);
+            
+            setTimeout(() => {
+                alertElement.classList.remove('translate-y-4', 'opacity-0');
+            }, 20);
+
+            setTimeout(() => {
+                alertElement.classList.add('translate-y-4', 'opacity-0');
+                setTimeout(() => alertElement.remove(), 400);
+            }, 4500);
+        }
+
+        // FAQ accordion action triggers
+        function toggleFaq(id) {
+            const answerElement = document.getElementById(`faq-ans-${id}`);
+            const chevronElement = document.getElementById(`faq-icon-${id}`);
+            
+            if (answerElement.style.maxHeight && answerElement.style.maxHeight !== '0px') {
+                answerElement.style.maxHeight = '0px';
+                chevronElement.style.transform = 'rotate(0deg)';
+            } else {
+                answerElement.style.maxHeight = answerElement.scrollHeight + "px";
+                chevronElement.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        // Navigation toggler (Mobile viewports)
+        function toggleMobileMenu() {
+            const list = document.getElementById('mobile-menu');
+            const iconElement = document.getElementById('menu-icon');
+            if (list.classList.contains('hidden')) {
+                list.classList.remove('hidden');
+                iconElement.className = 'fa-solid fa-xmark';
+            } else {
+                list.classList.add('hidden');
+                iconElement.className = 'fa-solid fa-bars';
+            }
+        }
+
+        function setupFooterYear() {
+            document.getElementById('current-year').innerText = new Date().getFullYear();
+        }
+    </script>
+</body>
+</html>
