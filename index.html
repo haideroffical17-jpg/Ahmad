@@ -123,7 +123,7 @@
                 </button>
 
                 <!-- Buy Today Accent Button -->
-                <a id="nav-whatsapp-btn" href="https://wa.me/+447563870553?text=Hello!" target="_blank" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-500 text-white font-extrabold text-sm hover:bg-emerald-600 shadow-neon-green transition-all transform hover:-translate-y-0.5 cursor-pointer">
+                <a id="nav-whatsapp-btn" href="https://wa.me/923000000000?text=Hello!" target="_blank" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-500 text-white font-extrabold text-sm hover:bg-emerald-600 shadow-neon-green transition-all transform hover:-translate-y-0.5 cursor-pointer">
                     <i class="fa-brands fa-whatsapp text-lg animate-pulse"></i>
                     <span>Buy Today</span>
                 </a>
@@ -607,7 +607,7 @@
     <script>
         // Default Global Setup Values
         const APP_FALLBACK_SETTINGS = {
-            whatsapp: "923000000000", 
+            whatsapp: "447563870553", 
             currency: "Rs.",
             adminEmail: "Haideroffical17@gmail.com",
             adminPass: "HaiderAli000"
@@ -718,6 +718,13 @@
         ];
 
         let appSettings = JSON.parse(localStorage.getItem('seo_store_settings')) || APP_FALLBACK_SETTINGS;
+        
+        // Ensure returning users get the new WhatsApp number immediately instead of old cached one
+        if (appSettings.whatsapp === "923000000000") {
+            appSettings.whatsapp = "447563870553";
+            localStorage.setItem('seo_store_settings', JSON.stringify(appSettings));
+        }
+
         let appProducts = JSON.parse(localStorage.getItem('seo_store_products')) || DEFAULT_CATALOG;
 
         function initVisitorTracking() {
@@ -772,11 +779,11 @@
                     logoContent = BRAND_LOGOS[p.iconKey];
                 }
 
-                const customWhatsappMsg = encodeURIComponent(`Hello Premium Hub! I want to buy the "${p.name}" VIP package. Please guide me through payment processes so I can activate my subscription. Price: ${appSettings.currency} ${p.salePrice}`);
+                const customWhatsappMsg = encodeURIComponent(`Hi I want to buy ${p.name}`);
                 const whatsappUrl = `https://wa.me/${appSettings.whatsapp}?text=${customWhatsappMsg}`;
 
                 const cardMarkup = `
-                    <div class="relative group rounded-3xl p-[1.5px] bg-gradient-to-b from-white/10 to-white/5 hover:from-amber-400/80 hover:to-orange-600/80 transition-all duration-500 overflow-hidden cursor-pointer h-full" onclick="window.open('${whatsappUrl}', '_blank')">
+                    <div class="glass-card rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden group">
                         <div class="absolute inset-0 bg-gradient-to-br from-amber-500/10 to-orange-600/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                         <div class="relative h-full bg-[#030712] rounded-[22px] p-6 flex flex-col z-10 overflow-hidden shadow-2xl">
                             <!-- Inner Glow -->
@@ -890,7 +897,7 @@
         // Global variables updating engine
         function refreshInteractiveElements() {
             const currentNum = appSettings.whatsapp;
-            const standardMsg = encodeURIComponent("Hello Premium Hub! I am interested in ordering premium services.");
+            const standardMsg = encodeURIComponent("Hi I want to buy a tool");
             const completeUrl = `https://wa.me/${currentNum}?text=${standardMsg}`;
 
             document.getElementById('nav-whatsapp-btn').setAttribute('href', completeUrl);
