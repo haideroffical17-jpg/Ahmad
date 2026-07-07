@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BrandSeoTools - Premium Accounts & Digital Hub</title>
+    <title>Premium Accounts & Digital Hub</title>
     <!-- Favicon Integration -->
     <link rel="icon" type="image/jpeg" href="https://i.ibb.co/vx3NP6NS/tiktok-video-zgh7-A.jpg">
     <link rel="apple-touch-icon" href="https://i.ibb.co/vx3NP6NS/tiktok-video-zgh7-A.jpg">
@@ -13,7 +13,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
+    <!-- Firebase (compat SDK, easiest to use with plain script tags) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
     <script>
         tailwind.config = {
             theme: {
@@ -241,7 +245,10 @@
 
         <!-- Dynamic Product Catalog Container Grid -->
         <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Rendered by Javascript with customized real SVGs and prices -->
+            <div class="col-span-full text-center text-slate-400 py-10">
+                <i class="fa-solid fa-circle-notch fa-spin text-2xl mb-3 block text-premium-400"></i>
+                Loading catalog...
+            </div>
         </div>
     </section>
 
@@ -421,7 +428,7 @@
     </div>
 
     <!-- Interactive Universal Login Modal -->
-    <div id="login-modal" class="fixed inset-0 bg-slate-950/85 z-50 flex items-center justify-center p-4 hidden backdrop-blur-md">
+    <div id="login-modal" class="fixed inset-0 bg-slate-950/85 z-[10000] flex items-center justify-center p-4 hidden backdrop-blur-md">
         <div class="bg-slate-900 border border-white/10 rounded-3xl w-full max-w-md p-6 sm:p-8 shadow-2xl relative">
             <button onclick="closeLoginModal()" class="absolute right-4 top-4 text-slate-400 hover:text-white p-2 rounded-lg bg-slate-800">
                 <i class="fa-solid fa-xmark"></i>
@@ -608,16 +615,27 @@
 
     <!-- CLIENT AND ENGINE SCRIPTS -->
     <script>
-        // 🚨 IMPORTANT: Change this version number (e.g., to "1.2", "1.3") whenever you add new tools or change prices in the code!
-        // This forces all customers' browsers to clear their old cache and instantly show your new changes.
-        const APP_VERSION = "1.1";
+        // ============================================================
+        // FIREBASE SETUP
+        // ============================================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyB2BUfJ1hHYIZM6EImgyxEWMnefs5gOviU",
+            authDomain: "grow-with-ahmad.firebaseapp.com",
+            projectId: "grow-with-ahmad",
+            storageBucket: "grow-with-ahmad.firebasestorage.app",
+            messagingSenderId: "368851414424",
+            appId: "1:368851414424:web:02830da32c132f1c358fed"
+        };
 
-        if (localStorage.getItem('premiumhub_version') !== APP_VERSION) {
-            localStorage.removeItem('seo_store_products');
-            localStorage.setItem('premiumhub_version', APP_VERSION);
-        }
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
 
-        // Default Global Setup Values
+        // Firestore layout used by this page:
+        //   store/settings  -> { whatsapp, currency, adminEmail, adminPass }
+        //   store/products  -> { list: [ ...productObjects ] }
+        //   store/visitors  -> { daily, monthly, lastDate, lastMonth }
+
+        // Default Global Setup Values (used only if Firestore has no data yet)
         const APP_FALLBACK_SETTINGS = {
             whatsapp: "447563870553", 
             currency: "Rs.",
@@ -633,7 +651,8 @@
             netflix: `<img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix" class="w-10 h-10 object-contain">`,
             spotify: `<img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify" class="w-10 h-10 object-contain p-1">`,
             midjourney: `<img src="https://upload.wikimedia.org/wikipedia/commons/e/e6/Midjourney_Emblem.png" alt="Midjourney" class="w-10 h-10 object-contain p-1 filter invert">`,
-            semrush: `<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Semrush_logo.svg/512px-Semrush_logo.svg.png" alt="Semrush" class="w-10 h-10 object-contain p-1">`,
+            /* Icon-only mark (no brand wordmark/text baked into the image) */
+            semrush: `<i class="fa-solid fa-magnifying-glass-chart text-3xl text-orange-400"></i>`,
             adobecc: `<img src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Adobe_Creative_Cloud_Logo_2020.svg" alt="Adobe CC" class="w-10 h-10 object-contain p-1">`
         };
 
@@ -729,44 +748,126 @@
             }
         ];
 
-        let appSettings = JSON.parse(localStorage.getItem('seo_store_settings')) || APP_FALLBACK_SETTINGS;
-        
-        // Ensure returning users get the new WhatsApp number immediately instead of old cached one
-        if (appSettings.whatsapp === "923000000000") {
-            appSettings.whatsapp = "447563870553";
-            localStorage.setItem('seo_store_settings', JSON.stringify(appSettings));
+        let appSettings = { ...APP_FALLBACK_SETTINGS };
+        let appProducts = [...DEFAULT_CATALOG];
+
+        // ------------------------------------------------------------
+        // FIRESTORE LOAD / SAVE HELPERS
+        // ------------------------------------------------------------
+        async function loadSettingsFromDB() {
+            try {
+                const snap = await db.collection('store').doc('settings').get();
+                if (snap.exists) {
+                    appSettings = { ...APP_FALLBACK_SETTINGS, ...snap.data() };
+                } else {
+                    appSettings = { ...APP_FALLBACK_SETTINGS };
+                    await db.collection('store').doc('settings').set(appSettings);
+                }
+            } catch (err) {
+                console.error('Could not load settings from Firestore, using defaults:', err);
+                appSettings = { ...APP_FALLBACK_SETTINGS };
+            }
         }
 
-        let appProducts = JSON.parse(localStorage.getItem('seo_store_products')) || DEFAULT_CATALOG;
+        async function saveSettingsToDB() {
+            try {
+                await db.collection('store').doc('settings').set(appSettings, { merge: true });
+                return true;
+            } catch (err) {
+                console.error('Could not save settings to Firestore:', err);
+                showToastNotification('Could not save settings — check your connection.', 'error');
+                return false;
+            }
+        }
 
-        function initVisitorTracking() {
-            let visitors = JSON.parse(localStorage.getItem('seo_store_visitors')) || { daily: 0, monthly: 0, lastDate: '', lastMonth: '' };
+        async function loadProductsFromDB() {
+            try {
+                const snap = await db.collection('store').doc('products').get();
+                if (snap.exists && Array.isArray(snap.data().list) && snap.data().list.length) {
+                    appProducts = snap.data().list;
+                } else {
+                    appProducts = [...DEFAULT_CATALOG];
+                    await db.collection('store').doc('products').set({ list: appProducts });
+                }
+            } catch (err) {
+                console.error('Could not load products from Firestore, using defaults:', err);
+                appProducts = [...DEFAULT_CATALOG];
+            }
+        }
+
+        async function saveProductsToDB() {
+            try {
+                await db.collection('store').doc('products').set({ list: appProducts });
+                return true;
+            } catch (err) {
+                console.error('Could not save products to Firestore:', err);
+                showToastNotification('Could not save products — check your connection.', 'error');
+                return false;
+            }
+        }
+
+        async function trackVisitorInDB() {
             const today = new Date();
             const dateString = today.toISOString().split('T')[0];
             const monthString = dateString.substring(0, 7);
+            const ref = db.collection('store').doc('visitors');
 
-            if (visitors.lastDate !== dateString) {
-                visitors.daily = 0;
-                visitors.lastDate = dateString;
-            }
-            if (visitors.lastMonth !== monthString) {
-                visitors.monthly = 0;
-                visitors.lastMonth = monthString;
-            }
+            try {
+                await db.runTransaction(async (t) => {
+                    const snap = await t.get(ref);
+                    let visitors = snap.exists
+                        ? snap.data()
+                        : { daily: 0, monthly: 0, lastDate: '', lastMonth: '' };
 
-            // Increment slightly to simulate traffic
-            visitors.daily += Math.floor(Math.random() * 3) + 1;
-            visitors.monthly += Math.floor(Math.random() * 3) + 1;
-            
-            localStorage.setItem('seo_store_visitors', JSON.stringify(visitors));
-            return visitors;
+                    if (visitors.lastDate !== dateString) {
+                        visitors.daily = 0;
+                        visitors.lastDate = dateString;
+                    }
+                    if (visitors.lastMonth !== monthString) {
+                        visitors.monthly = 0;
+                        visitors.lastMonth = monthString;
+                    }
+
+                    visitors.daily += 1;
+                    visitors.monthly += 1;
+
+                    t.set(ref, visitors);
+                });
+            } catch (err) {
+                console.error('Could not update visitor stats in Firestore:', err);
+            }
         }
 
-        window.onload = function() {
-            initVisitorTracking();
+        async function getVisitorStats() {
+            try {
+                const snap = await db.collection('store').doc('visitors').get();
+                return snap.exists ? snap.data() : { daily: 0, monthly: 0 };
+            } catch (err) {
+                console.error('Could not read visitor stats:', err);
+                return { daily: 0, monthly: 0 };
+            }
+        }
+
+        // ------------------------------------------------------------
+        // APP BOOTSTRAP
+        // ------------------------------------------------------------
+        window.onload = async function() {
+            setupFooterYear();
+
+            document.getElementById('products-grid').innerHTML = `
+                <div class="col-span-full text-center text-slate-400 py-10">
+                    <i class="fa-solid fa-circle-notch fa-spin text-2xl mb-3 block text-premium-400"></i>
+                    Loading catalog...
+                </div>`;
+
+            await Promise.all([
+                loadSettingsFromDB(),
+                loadProductsFromDB(),
+                trackVisitorInDB()
+            ]);
+
             renderProducts();
             refreshInteractiveElements();
-            setupFooterYear();
 
             // Handle secret #manage hash parameter directly from address bar
             if (window.location.hash === '#manage') {
@@ -782,6 +883,11 @@
             const itemsToRender = filter === 'all' 
                 ? appProducts 
                 : appProducts.filter(p => p.category === filter);
+
+            if (!itemsToRender.length) {
+                grid.innerHTML = `<div class="col-span-full text-center text-slate-400 py-10">No tools in this category yet.</div>`;
+                return;
+            }
 
             itemsToRender.forEach(p => {
                 let logoContent = `<i class="fa-solid fa-cube text-slate-400 text-3xl"></i>`;
@@ -923,17 +1029,19 @@
             form.classList.toggle('hidden');
         }
 
-        function deleteProduct(id) {
+        async function deleteProduct(id) {
             if(confirm('Are you sure you want to remove this tool?')) {
                 appProducts = appProducts.filter(p => p.id !== id);
-                localStorage.setItem('seo_store_products', JSON.stringify(appProducts));
-                openAdminPanel(); // Refresh admin list
-                renderProducts(); // Refresh public list
-                showToastNotification("Product deleted successfully!", "success");
+                const saved = await saveProductsToDB();
+                if (saved) {
+                    openAdminPanel(); // Refresh admin list
+                    renderProducts(); // Refresh public list
+                    showToastNotification("Product deleted successfully!", "success");
+                }
             }
         }
 
-        function addNewProduct() {
+        async function addNewProduct() {
             const name = document.getElementById('new-prod-name').value.trim();
             const desc = document.getElementById('new-prod-desc').value.trim();
             const orig = document.getElementById('new-prod-orig').value.trim();
@@ -959,30 +1067,32 @@
                 badge: "New Arrival"
             });
 
-            localStorage.setItem('seo_store_products', JSON.stringify(appProducts));
-            document.getElementById('new-prod-name').value = '';
-            document.getElementById('new-prod-desc').value = '';
-            document.getElementById('new-prod-orig').value = '';
-            document.getElementById('new-prod-sale').value = '';
-            document.getElementById('new-prod-logo').value = '';
-            
-            toggleAddProductForm();
-            openAdminPanel();
-            renderProducts();
-            showToastNotification("New product added!", "success");
+            const saved = await saveProductsToDB();
+            if (saved) {
+                document.getElementById('new-prod-name').value = '';
+                document.getElementById('new-prod-desc').value = '';
+                document.getElementById('new-prod-orig').value = '';
+                document.getElementById('new-prod-sale').value = '';
+                document.getElementById('new-prod-logo').value = '';
+
+                toggleAddProductForm();
+                openAdminPanel();
+                renderProducts();
+                showToastNotification("New product added!", "success");
+            }
         }
 
         // Open Secret Admin Control Panel
-        function openAdminPanel() {
+        async function openAdminPanel() {
             document.getElementById('admin-panel').classList.remove('hidden');
             document.getElementById('admin-whatsapp').value = appSettings.whatsapp;
             document.getElementById('admin-currency').value = appSettings.currency;
             document.getElementById('admin-pass-change').value = '';
 
             // Update stats view
-            const visitors = JSON.parse(localStorage.getItem('seo_store_visitors')) || { daily: 0, monthly: 0 };
-            document.getElementById('stat-daily').innerText = visitors.daily;
-            document.getElementById('stat-monthly').innerText = visitors.monthly;
+            const visitors = await getVisitorStats();
+            document.getElementById('stat-daily').innerText = visitors.daily || 0;
+            document.getElementById('stat-monthly').innerText = visitors.monthly || 0;
 
             const itemsFormContainer = document.getElementById('admin-price-rows');
             itemsFormContainer.innerHTML = '';
@@ -1033,17 +1143,16 @@
         }
 
         // Commit pricing modifications and settings configuration modifications
-        function saveAdminSettings() {
+        async function saveAdminSettings() {
             appSettings.whatsapp = document.getElementById('admin-whatsapp').value.trim();
             appSettings.currency = document.getElementById('admin-currency').value.trim();
 
             const passwordChangeValue = document.getElementById('admin-pass-change').value.trim();
             if (passwordChangeValue.length >= 4) {
                 appSettings.adminPass = passwordChangeValue;
-                showToastNotification("Admin password changed successfully!", "success");
             }
 
-            // Loop and save prices from fields
+            // Loop and update prices from fields
             appProducts.forEach(p => {
                 const saleField = document.getElementById(`admin-sale-price-${p.id}`);
                 const origField = document.getElementById(`admin-orig-price-${p.id}`);
@@ -1052,16 +1161,22 @@
                 if (origField) p.originalPrice = origField.value.trim();
             });
 
-            // Write to localStorage
-            localStorage.setItem('seo_store_settings', JSON.stringify(appSettings));
-            localStorage.setItem('seo_store_products', JSON.stringify(appProducts));
+            // Write to Firestore
+            const [settingsSaved, productsSaved] = await Promise.all([
+                saveSettingsToDB(),
+                saveProductsToDB()
+            ]);
 
-            // Reload visual components
-            renderProducts();
-            refreshInteractiveElements();
-            closeAdminPanel();
-
-            showToastNotification("Dashboard pricing configurations updated!", "success");
+            if (settingsSaved && productsSaved) {
+                // Reload visual components
+                renderProducts();
+                refreshInteractiveElements();
+                closeAdminPanel();
+                showToastNotification("Dashboard pricing configurations updated!", "success");
+                if (passwordChangeValue.length >= 4) {
+                    showToastNotification("Admin password changed successfully!", "success");
+                }
+            }
         }
 
         // CUSTOM NOTIFICATIONS (TINY TOAST ENGINE)
